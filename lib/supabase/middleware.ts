@@ -1,6 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+type CookieToSet = { name: string; value: string; options?: any };
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -12,7 +14,7 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: CookieToSet[]) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           supabaseResponse = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
@@ -23,12 +25,10 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // IMPORTANT: keep this between createServerClient and the response return.
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Redirect unauthenticated users away from protected routes
   const path = request.nextUrl.pathname;
   const publicPaths = ["/auth/login", "/auth/signup", "/auth/verify", "/auth/callback"];
   if (!user && !publicPaths.some((p) => path.startsWith(p))) {
