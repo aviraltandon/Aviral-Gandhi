@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-serif: "Cormorant Garamond", Georgia, serif;
+    --font-mono: ui-monospace, "SF Mono", monospace;
+
+    --background: 39 35% 95%;
+    --foreground: 24 41% 17%;
+    --card: 0 0% 100%;
+    --card-foreground: 24 41% 17%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 41% 17%;
+    --primary: 27 50% 28%;
+    --primary-foreground: 39 50% 93%;
+    --secondary: 38 35% 90%;
+    --secondary-foreground: 24 41% 17%;
+    --muted: 38 30% 92%;
+    --muted-foreground: 30 18% 40%;
+    --accent: 35 80% 41%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 60% 41%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 25% 82%;
+    --input: 36 25% 82%;
+    --ring: 27 50% 28%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4 { @apply font-serif; }
+}
+
+/* Cormorant Garamond for the headings */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");
+:root { --font-sans: "Inter", system-ui, sans-serif; }
+
+.memorial {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+
+.title-pill {
+  @apply inline-block text-[10px] px-2 py-0.5 rounded bg-ag-amberLight text-ag-amber mr-1 mt-1;
+}
