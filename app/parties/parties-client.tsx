@@ -30,7 +30,10 @@ type Member = {
   party_id: string;
   user_id: string;
   status: string;
-  profiles: { name: string; avatar_url: string | null } | null;
+  profiles:
+    | { name: string; avatar_url: string | null }
+    | { name: string; avatar_url: string | null }[]
+    | null;
 };
 
 export function PartiesClient({
@@ -236,7 +239,7 @@ export function PartiesClient({
 
                     {approvedMembers.length > 0 && (
                       <div className="text-xs text-ag-mid">
-                        Members: {approvedMembers.map((m) => m.profiles?.name || "—").join(", ")}
+                       Members: {approvedMembers.map((m) => (Array.isArray(m.profiles) ? m.profiles[0] : m.profiles)?.name || "—").join(", ")}
                       </div>
                     )}
 
@@ -246,7 +249,7 @@ export function PartiesClient({
                         <div className="space-y-2">
                           {pendingMembers.map((m) => (
                             <div key={m.user_id} className="flex justify-between items-center text-sm">
-                              <span>{m.profiles?.name || "—"}</span>
+                              <span>{(Array.isArray(m.profiles) ? m.profiles[0] : m.profiles)?.name || "—"}</span>
                               <div className="flex gap-2">
                                 <Button size="sm" onClick={() => onApproveMember(p.id, m.user_id)} disabled={isPending}>Approve</Button>
                                 <Button size="sm" variant="outline" onClick={() => onRejectMember(p.id, m.user_id)} disabled={isPending}>Reject</Button>
