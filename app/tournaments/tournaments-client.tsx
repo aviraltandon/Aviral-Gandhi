@@ -38,7 +38,10 @@ type PendingReg = {
   display_name: string;
   status: string;
   created_at: string;
-  tournaments: { title: string } | null;
+  tournaments:
+    | { title: string }
+    | { title: string }[]
+    | null;
 };
 
 export function TournamentsClient({
@@ -210,7 +213,7 @@ export function TournamentsClient({
                     <div className="text-sm">
                       <span className="font-medium">{r.display_name}</span>
                       <span className="text-ag-mid"> wants to join </span>
-                      <span className="font-medium">{r.tournaments?.title || "tournament"}</span>
+                      <span className="font-medium">{(Array.isArray(r.tournaments) ? r.tournaments[0] : r.tournaments)?.title || "tournament"}</span>
                     </div>
                     <div className="flex gap-2">
                       <Button size="sm" onClick={() => onApproveReg(r.id)} disabled={isPending}>Approve</Button>
